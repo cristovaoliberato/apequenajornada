@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class bela : MonoBehaviour
+{  
+    public Rigidbody2D jogador; // jogador que recebera o código. Eu peço mas nunca uso no código. o que me dizem?
+    public float forcapulo;  // força do pulo da bela
+    private int duplo = 2;  // contador da quantidade de pulos que o jogador pode dar em sequencia
+    
+    public float vel;
+
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {    
+        transform.Translate(new Vector3(vel*Time.deltaTime,0,0)); // move o presonagem para frente sempre
+
+        if(Input.GetKeyDown(KeyCode.UpArrow)) // o jogador apertou a seta para cima?
+        { 
+         if ( duplo >0) // o jogador ainda pode dar pulos em sequencia?
+          {
+             jogador.AddForce(new Vector2(0,forcapulo*Time.deltaTime),ForceMode2D.Impulse); // adiciona forçca de pulo
+             duplo--; // diminui um de duplo
+          }
+        }    
+    }  
+     
+     
+     // metodo para verificar a colisão com o chão e habilitar pulo duplo.
+     private void OnCollisionEnter2D(Collision2D other) //quando entrar em colisão
+     {
+         if (other.gameObject.CompareTag("chao")) // se a colisão for com o chão
+         { 
+            duplo = 2; // set duplo como dois. O jogador ganha o direiro de pular mais duas vezes quando
+                       // cai no chão.
+           
+          }
+         
+
+     }
+}
